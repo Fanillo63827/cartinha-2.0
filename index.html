@@ -7,10 +7,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&family=Open+Sans&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html {
+    html, body {
       height: 100%;
       font-family: 'Open Sans', sans-serif;
-      /* Fundo com transição suave */
       background: linear-gradient(135deg, #ffe6f0, #ffe0ec);
       animation: bgColorShift 15s ease-in-out infinite alternate;
       overflow: hidden;
@@ -20,285 +19,231 @@
       padding: 20px;
     }
     @keyframes bgColorShift {
-      0% {
-        background: linear-gradient(135deg, #ffe6f0, #ffe0ec);
-      }
-      50% {
-        background: linear-gradient(135deg, #ffd1e3, #ffcade);
-      }
-      100% {
-        background: linear-gradient(135deg, #ffe6f0, #ffe0ec);
-      }
+      0% { background: linear-gradient(135deg, #ffe6f0, #ffe0ec); }
+      50% { background: linear-gradient(135deg, #ffd1e3, #ffcade); }
+      100% { background: linear-gradient(135deg, #ffe6f0, #ffe0ec); }
     }
     #app {
       position: relative;
       max-width: 600px;
-      background: rgba(255 255 255 / 0.9);
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 20px;
-      padding: 30px 40px;
+      padding: 30px 25px;
       box-shadow: 0 8px 25px rgba(230, 0, 115, 0.3);
       color: #333;
       text-align: center;
-      user-select: none;
+      z-index: 2;
     }
     h1 {
       font-family: 'Pacifico', cursive;
       color: #e60073;
-      font-size: 3rem;
-      margin-bottom: 25px;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
       text-shadow: 0 0 8px #e60073aa;
+    }
+    #counterBox {
+      margin-bottom: 20px;
+      background: #fff0f5;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(255, 105, 180, 0.2);
+    }
+    #counterBox span {
+      font-weight: bold;
+      color: #e60073;
+    }
+    #counterBox small {
+      display: block;
+      margin-top: 8px;
+      color: #cc005f;
+      font-style: italic;
     }
     button {
       background-color: #ff4da6;
       border: none;
       border-radius: 30px;
-      padding: 15px 30px;
-      font-size: 1.2rem;
+      padding: 12px 24px;
+      font-size: 1rem;
       color: white;
       cursor: pointer;
+      margin-top: 10px;
       box-shadow: 0 4px 12px rgba(255, 77, 166, 0.7);
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 600;
-      user-select: none;
+      transition: transform 0.2s ease;
     }
     button:hover {
       transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(255, 77, 166, 0.9);
-    }
-    .heart { animation: beat 1s infinite; font-size: 1.5rem; }
-    @keyframes beat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.3); }
     }
     #letter {
-      margin-top: 30px;
-      font-family: 'Dancing Script', cursive; /* fonte manuscrita */
-      font-size: 1.5rem;
-      line-height: 1.7;
-      white-space: pre-wrap;
-      color: #222;
-      min-height: 180px;
-      user-select: text;
-      position: relative;
-      z-index: 2;
+      margin-top: 20px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.3rem;
+      line-height: 1.6;
       text-align: left;
+      min-height: 180px;
+      white-space: pre-wrap;
     }
     .highlight {
       color: #e60073;
-      text-shadow:
-        0 0 5px #ff66b2,
-        0 0 10px #ff66b2,
-        0 0 20px #e60073,
-        0 0 30px #e60073;
-      font-weight: 700;
-    }
-    .highlight.blink { animation: blink 1.5s infinite; }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
+      font-weight: bold;
     }
     #extraMessageBtn {
       display: none;
-      margin-top: 30px;
     }
     #extraMessage {
-      margin-top: 20px;
-      font-style: italic;
-      font-size: 1.3rem;
-      color: #e60073;
       display: none;
-      animation: fadeIn 1s forwards;
-      text-align: center;
+      font-style: italic;
+      font-size: 1.1rem;
+      margin-top: 15px;
+      color: #e60073;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    #canvas-bg {
+    canvas#canvas-bg {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none;
       z-index: 0;
+      pointer-events: none;
     }
-    /* Confetes */
-    .confetti {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background-color: #ff4da6;
-      opacity: 0.9;
-      border-radius: 3px;
-      animation: confetti-fall 3s linear forwards;
-      will-change: transform, opacity;
-      z-index: 9999;
-    }
-    @keyframes confetti-fall {
-      to {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
+    @media (max-width: 480px) {
+      h1 { font-size: 2rem; }
+      #letter { font-size: 1.1rem; }
+      button { font-size: 0.95rem; padding: 10px 20px; }
     }
   </style>
 </head>
 <body>
 <canvas id="canvas-bg"></canvas>
-<div id="app">
-  <h1>Oi, amor <span class="heart">❤️</span></h1>
-  <button id="startBtn"><span class="heart">💖</span> Clique aqui</button>
-  <div id="letter"></div>
-  <button id="extraMessageBtn">📝 Tenho algo pra te dizer...</button>
-  <div id="extraMessage">Mesmo sem rótulo, você é quem eu mais quero perto. 💖</div>
-</div>
+  <div id="app">
+    <div id="counterBox">
+      Estamos conversando há <span id="daysCount">...</span> dias 💞
+      <small>e cada dia ao seu lado se torna mais especial</small>
+    </div>
+    <h1>Oi, amor ❤️</h1>
+    <button id="startBtn">💖 Clique aqui</button>
+    <div id="letter"></div>
+    <button id="extraMessageBtn">📝 Tenho algo pra te dizer...</button>
+    <div id="extraMessage">Mesmo sem rótulo, você é quem eu mais quero perto. 💖</div>
+  </div>
+  <script>
+    const startDate = new Date(2025, 2, 20);
+    const today = new Date();
+    const diffTime = today.getTime() - startDate.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    document.getElementById("daysCount").textContent = diffDays;
 
-<script>
-const message = [
-  { text: "Oi, meu bem...\n" },
-  { text: "Desde que você chegou, meus dias ganharam um novo sentido.\n" },
-  { text: "É difícil explicar, mas tem algo em você que me acalma e me prende ao mesmo tempo.\n\n" },
-  { text: "Às vezes eu me pego com " },
-  { text: "saudade", highlight: true },
-  { text: " sua do nada, como se meu coração tivesse se acostumado com a ideia de te ter por perto.\n" },
-  { text: "Gosto muito de você.\n" },
-  { text: "Você é " },
-  { text: "especial", highlight: true },
-  { text: " pra mim.\n" },
-  { text: "E mesmo que a gente ainda não tenha colocado um nome nisso tudo...\n" },
-  { text: "Eu queria que você soubesse que isso que eu sinto é de verdade. 💗" }
-];
+    const message = [
+      { text: "Oi, meu bem...\n" },
+      { text: "Desde que você chegou, meus dias ganharam um novo sentido.\n" },
+      { text: "É difícil explicar, mas tem algo em você que me acalma e me prende ao mesmo tempo.\n\n" },
+      { text: "Às vezes eu me pego com " },
+      { text: "saudade", highlight: true },
+      { text: " sua do nada, como se meu coração tivesse se acostumado com a ideia de te ter por perto.\n" },
+      { text: "Gosto muito de você.\n" },
+      { text: "Você é " },
+      { text: "especial", highlight: true },
+      { text: " pra mim.\n" },
+      { text: "E mesmo que a gente ainda não tenha colocado um nome nisso tudo...\n" },
+      { text: "Eu queria que você soubesse que isso que eu sinto é de verdade. 💗" }
+    ];
 
-const letter = document.getElementById("letter");
-const startBtn = document.getElementById("startBtn");
-const extraMessageBtn = document.getElementById("extraMessageBtn");
-const extraMessage = document.getElementById("extraMessage");
+    const letter = document.getElementById("letter");
+    const startBtn = document.getElementById("startBtn");
+    const extraMessageBtn = document.getElementById("extraMessageBtn");
+    const extraMessage = document.getElementById("extraMessage");
 
-let partIndex = 0;
-let charIndex = 0;
-let typingInterval;
-let currentSpan = null;
+    let partIndex = 0;
+    let charIndex = 0;
+    let typingInterval;
 
-function typeLetter() {
-  if (partIndex >= message.length) {
-    clearInterval(typingInterval);
-    setTimeout(() => {
-      extraMessageBtn.style.display = "inline-block";
-    }, 800);
-    return;
-  }
-
-  const part = message[partIndex];
-  const text = part.text || "";
-  const highlight = part.highlight;
-
-  if (charIndex < text.length) {
-    const char = text[charIndex];
-    if (highlight) {
-      if (!currentSpan) {
-        currentSpan = document.createElement("span");
-        currentSpan.classList.add("highlight", "blink");
-        letter.appendChild(currentSpan);
+    function typeLetter() {
+      if (partIndex >= message.length) {
+        clearInterval(typingInterval);
+        extraMessageBtn.style.display = "inline-block";
+        return;
       }
-      currentSpan.textContent += char;
-    } else {
-      letter.append(char);
+      const part = message[partIndex];
+      const text = part.text || "";
+      const highlight = part.highlight;
+      if (charIndex < text.length) {
+        const char = text[charIndex];
+        if (highlight) {
+          const span = document.createElement("span");
+          span.className = "highlight";
+          span.textContent = char;
+          letter.appendChild(span);
+        } else {
+          letter.append(char);
+        }
+        charIndex++;
+      } else {
+        charIndex = 0;
+        partIndex++;
+      }
     }
-    charIndex++;
-  } else {
-    charIndex = 0;
-    currentSpan = null;
-    partIndex++;
-  }
-}
 
-startBtn.onclick = () => {
-  startBtn.style.display = "none";
-  typingInterval = setInterval(typeLetter, 45);
-};
+    startBtn.onclick = () => {
+      startBtn.style.display = "none";
+      typingInterval = setInterval(typeLetter, 40);
+    };
 
-extraMessageBtn.onclick = () => {
-  extraMessage.style.display = "block";
-  extraMessageBtn.style.display = "none";
-  launchConfetti();
-};
+    extraMessageBtn.onclick = () => {
+      extraMessage.style.display = "block";
+      extraMessageBtn.style.display = "none";
+    };
 
-// fundo com corações
-const canvas = document.getElementById("canvas-bg");
-const ctx = canvas.getContext("2d");
-let w, h;
-function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
+    // corações flutuantes no fundo
+    const canvas = document.getElementById("canvas-bg");
+    const ctx = canvas.getContext("2d");
+    let w, h;
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
 
-class Heart {
-  constructor() { this.reset(); }
-  reset() {
-    this.x = Math.random() * w;
-    this.y = h + Math.random() * 100;
-    this.size = 8 + Math.random() * 12;
-    this.speed = 0.3 + Math.random() * 0.6;
-    this.angle = Math.random() * Math.PI * 2;
-    this.angleSpeed = 0.01 + Math.random() * 0.02;
-    this.opacity = 0.5 + Math.random() * 0.5;
-  }
-  draw() {
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate(this.angle);
-    ctx.globalAlpha = this.opacity;
-    ctx.fillStyle = "#ff4da6";
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.bezierCurveTo(this.size / 2, -this.size / 2, this.size, this.size / 3, 0, this.size);
-    ctx.bezierCurveTo(-this.size, this.size / 3, -this.size / 2, -this.size / 2, 0, 0);
-    ctx.fill();
-    ctx.restore();
-  }
-  update() {
-    this.y -= this.speed;
-    this.angle += this.angleSpeed;
-    if (this.y + this.size < 0) this.reset();
-  }
-}
-const hearts = Array.from({ length: 40 }, () => new Heart());
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-  hearts.forEach(h => {
-    h.update();
-    h.draw();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
+    class Heart {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * w;
+        this.y = h + Math.random() * 100;
+        this.size = 8 + Math.random() * 12;
+        this.speed = 0.3 + Math.random() * 0.6;
+        this.angle = Math.random() * Math.PI * 2;
+        this.angleSpeed = 0.01 + Math.random() * 0.02;
+        this.opacity = 0.5 + Math.random() * 0.5;
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = "#ff4da6";
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(this.size / 2, -this.size / 2, this.size, this.size / 3, 0, this.size);
+        ctx.bezierCurveTo(-this.size, this.size / 3, -this.size / 2, -this.size / 2, 0, 0);
+        ctx.fill();
+        ctx.restore();
+      }
+      update() {
+        this.y -= this.speed;
+        this.angle += this.angleSpeed;
+        if (this.y + this.size < 0) this.reset();
+      }
+    }
 
-// Confetti animation
-function launchConfetti() {
-  const colors = ['#ff4da6', '#ff77b3', '#ff1a75', '#e60073', '#ff99cc'];
-  const count = 40;
-
-  for (let i = 0; i < count; i++) {
-    const confetti = document.createElement('div');
-    confetti.classList.add('confetti');
-    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.left = Math.random() * window.innerWidth + 'px';
-    confetti.style.top = '-10px';
-    confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
-    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-
-    document.body.appendChild(confetti);
-
-    // Remove confetti after animation
-    confetti.addEventListener('animationend', () => {
-      confetti.remove();
-    });
-  }
-}
-</script>
+    const hearts = Array.from({ length: 40 }, () => new Heart());
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      hearts.forEach(h => {
+        h.update();
+        h.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>
