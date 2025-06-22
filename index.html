@@ -4,23 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Para Você 💌</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&family=Open+Sans&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html {
       height: 100%;
       font-family: 'Open Sans', sans-serif;
+      /* Fundo com transição suave */
       background: linear-gradient(135deg, #ffe6f0, #ffe0ec);
+      animation: bgColorShift 15s ease-in-out infinite alternate;
       overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
     }
+    @keyframes bgColorShift {
+      0% {
+        background: linear-gradient(135deg, #ffe6f0, #ffe0ec);
+      }
+      50% {
+        background: linear-gradient(135deg, #ffd1e3, #ffcade);
+      }
+      100% {
+        background: linear-gradient(135deg, #ffe6f0, #ffe0ec);
+      }
+    }
     #app {
       position: relative;
       max-width: 600px;
-      background: rgba(255 255 255 / 0.85);
+      background: rgba(255 255 255 / 0.9);
       border-radius: 20px;
       padding: 30px 40px;
       box-shadow: 0 8px 25px rgba(230, 0, 115, 0.3);
@@ -44,7 +57,7 @@
       color: white;
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(255, 77, 166, 0.7);
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -62,7 +75,8 @@
     }
     #letter {
       margin-top: 30px;
-      font-size: 1.25rem;
+      font-family: 'Dancing Script', cursive; /* fonte manuscrita */
+      font-size: 1.5rem;
       line-height: 1.7;
       white-space: pre-wrap;
       color: #222;
@@ -70,6 +84,7 @@
       user-select: text;
       position: relative;
       z-index: 2;
+      text-align: left;
     }
     .highlight {
       color: #e60073;
@@ -92,10 +107,11 @@
     #extraMessage {
       margin-top: 20px;
       font-style: italic;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: #e60073;
       display: none;
       animation: fadeIn 1s forwards;
+      text-align: center;
     }
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -108,6 +124,24 @@
       height: 100%;
       pointer-events: none;
       z-index: 0;
+    }
+    /* Confetes */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #ff4da6;
+      opacity: 0.9;
+      border-radius: 3px;
+      animation: confetti-fall 3s linear forwards;
+      will-change: transform, opacity;
+      z-index: 9999;
+    }
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -188,6 +222,7 @@ startBtn.onclick = () => {
 extraMessageBtn.onclick = () => {
   extraMessage.style.display = "block";
   extraMessageBtn.style.display = "none";
+  launchConfetti();
 };
 
 // fundo com corações
@@ -241,6 +276,29 @@ function animate() {
   requestAnimationFrame(animate);
 }
 animate();
+
+// Confetti animation
+function launchConfetti() {
+  const colors = ['#ff4da6', '#ff77b3', '#ff1a75', '#e60073', '#ff99cc'];
+  const count = 40;
+
+  for (let i = 0; i < count; i++) {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.top = '-10px';
+    confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+    document.body.appendChild(confetti);
+
+    // Remove confetti after animation
+    confetti.addEventListener('animationend', () => {
+      confetti.remove();
+    });
+  }
+}
 </script>
 </body>
 </html>
